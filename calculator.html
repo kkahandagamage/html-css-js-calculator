@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<style>
+		.container {
+		  width: 400px;
+		  padding: 10px;
+		  background-color: gainsboro;
+		}
+		.container-inner {
+		  padding: 20px;
+		  background-color: darkorange;
+		  border-radius: 20px;
+		}
+		.results {
+		  background-color: gainsboro;
+		  border-radius: 10px;
+		  padding-right: 10px;
+		  font-family: "Comic Sans MS", "Comic Sans", cursive;
+		  font-weight: bolder;
+		  font-style: italic;
+		  font-size: 3rem;
+		  text-align: right;
+		  border-style: outset;
+		  box-shadow: 5px 5px 5px black;
+		}
+		.row {
+		  display: flex;
+		  padding-top: 5px;
+		}
+		.row-first {
+		  display: flex;
+		  padding-top: 25px;
+		}
+		.col {
+		  padding: 5px;
+		}
+		.keyboard-btn {
+		  width: 80px;
+		  box-shadow: 5px 5px 5px black;
+		  font-family: "Comic Sans MS", "Comic Sans", cursive;
+		  font-weight: bolder;
+		  font-style: italic;
+		  font-size: 2rem;
+		  border-radius: 10px;
+		}
+		.keyboard-btn-dbl-col {
+		  width: 170px;
+		  box-shadow: 5px 5px 5px black;
+		  font-family: "Comic Sans MS", "Comic Sans", cursive;
+		  font-weight: bolder;
+		  font-style: italic;
+		  font-size: 2rem;
+		  border-radius: 10px;
+		}
+		.keyboard-btn:active, .keyboard-btn-dbl-col:active {
+			transform: translateY(2px);
+		}
+	</style>
+    <script>
+		var first_value = 0;
+		var second_value = 0;
+		var answer = 0;
+		var screen_display1 = '';
+		var screen_display2 = '';
+		var screen_display = '0';
+		var operator = '';
+
+		function calculate(input) {    
+			if(input === '0' || input === '1' || input === '2' || input === '3' || input === '4' || input === '5' || input === '6' ||input === '7' || input === '8' || input === '9') {
+				if(operator === '') {
+					screen_display1 = screen_display1 + input;
+					first_value = parseInt(screen_display1);
+				} else {
+					screen_display2 = screen_display2 + input;
+					second_value = parseInt(screen_display2);
+				}
+				screen_display = screen_display1 + operator + screen_display2;
+			}
+			if(input === '+' || input === '-' || input === '*' || input === '/') {
+				operator = input;
+				screen_display = screen_display1 + operator + screen_display2;
+			}
+			if(input === '=') {
+				if(operator === '+') {
+					answer = first_value + second_value;
+				} else if(operator === '-') {
+					answer = first_value - second_value;
+				} else if(operator === '*') {
+					answer = first_value * second_value;
+				} else if(operator === '/') {
+					answer = first_value / second_value;
+				}
+				screen_display = answer;
+			}
+			if(input === 'CLR') {
+				first_value = 0;
+				second_value = 0;
+				answer = 0;
+				screen_display1 = '';
+				screen_display2 = '';
+				screen_display = '0';
+				operator = '';
+			}
+			document.getElementById('results').innerHTML = screen_display;
+		}	
+	</script>
+    <title>Online Calculator</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container-inner">
+        <div id="results" class="results">0</div>
+        <div class="row-first">
+          <div class="col"><button class="keyboard-btn" onclick="calculate('CLR')">CLR</button></div>
+          <div class="col"><button class="keyboard-btn" disabled="disabled">BKS</button></div>
+          <div class="col"><button class="keyboard-btn" disabled="disabled">M+</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('/')">/</button></div>
+        </div>
+        <div class="row">
+          <div class="col"><button class="keyboard-btn" onclick="calculate('7')">7</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('8')">8</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('9')">9</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('*')">*</button></div>
+        </div>
+        <div class="row">
+          <div class="col"><button class="keyboard-btn" onclick="calculate('4')">4</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('5')">5</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('6')">6</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('-')">-</button></div>
+        </div>
+        <div class="row">
+          <div class="col"><button class="keyboard-btn" onclick="calculate('1')">1</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('2')">2</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('3')">3</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('+')">+</button></div>
+        </div>
+        <div class="row">
+          <div class="col"><button class="keyboard-btn-dbl-col" onclick="calculate('0')">0</button></div>
+          <div class="col"><button class="keyboard-btn" disabled="disabled">.</button></div>
+          <div class="col"><button class="keyboard-btn" onclick="calculate('=')">=</button></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
